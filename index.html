@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Now • Direct Access</title>
+    <title>Active Session • Direct Link</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -15,8 +15,9 @@
 
         body {
             background-color: #090d16;
-            background-image: radial-gradient(circle at 50% -10%, rgba(16, 185, 129, 0.16), transparent 55%),
-                              radial-gradient(circle at 80% 95%, rgba(56, 189, 248, 0.12), transparent 50%);
+            background-image:
+                radial-gradient(circle at 50% -10%, rgba(16, 185, 129, 0.16), transparent 55%),
+                radial-gradient(circle at 80% 95%, rgba(56, 189, 248, 0.12), transparent 50%);
             color: #f8fafc;
             min-height: 100vh;
             display: flex;
@@ -28,7 +29,7 @@
         .container {
             width: 100%;
             max-width: 410px;
-            background: rgba(17, 24, 39, 0.92);
+            background: rgba(17, 24, 39, 0.94);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             padding: 24px 20px;
@@ -36,12 +37,10 @@
             backdrop-filter: blur(12px);
         }
 
-        .top-status {
+        .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 12px;
-            color: #94a3b8;
             margin-bottom: 18px;
         }
 
@@ -51,7 +50,7 @@
             gap: 7px;
             background: rgba(16, 185, 129, 0.14);
             color: #34d399;
-            padding: 5px 12px;
+            padding: 6px 12px;
             border-radius: 999px;
             font-weight: 600;
             font-size: 12px;
@@ -66,49 +65,18 @@
             animation: pulse 1.6s infinite;
         }
 
-        .profile-box {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            background: rgba(30, 41, 59, 0.55);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 14px;
-            border-radius: 14px;
-            margin-bottom: 18px;
-        }
-
-        .avatar-circle {
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #10b981, #0ea5e9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 20px;
-            color: #061018;
-            flex-shrink: 0;
-        }
-
-        .profile-info h2 {
-            font-size: 16px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 3px;
-        }
-
-        .profile-info p {
-            font-size: 12.5px;
-            color: #cbd5e1;
+        .session-tag {
+            font-size: 11.5px;
+            color: #94a3b8;
+            font-weight: 500;
         }
 
         .message-card {
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(15, 23, 42, 0.88);
             border: 1px solid rgba(255, 255, 255, 0.07);
             border-radius: 14px;
             padding: 18px 16px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .message-card h1 {
@@ -129,17 +97,42 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .perk-item {
-            background: rgba(30, 41, 59, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 10px;
             padding: 10px 12px;
             font-size: 12px;
             color: #e2e8f0;
             font-weight: 500;
+        }
+
+        /* Section right above the CTA button */
+        .above-cta {
+            background: rgba(14, 165, 233, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.28);
+            border-radius: 12px;
+            padding: 13px 14px;
+            margin-bottom: 14px;
+        }
+
+        .above-cta-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 6px;
+        }
+
+        .above-cta p {
+            font-size: 12.8px;
+            line-height: 1.5;
+            color: #e2e8f0;
         }
 
         .cta-button {
@@ -163,7 +156,7 @@
         }
 
         .sub-note {
-            margin-top: 14px;
+            margin-top: 13px;
             text-align: center;
             font-size: 11.5px;
             color: #94a3b8;
@@ -177,41 +170,38 @@
 </head>
 <body>
     <div class="container">
-        <div class="top-status">
-            <span class="online-badge"><span class="dot"></span> Active Right Now</span>
-            <span id="clockText">Just now</span>
-        </div>
-
-        <div class="profile-box">
-            <div class="avatar-circle">I</div>
-            <div class="profile-info">
-                <h2>Isabella • Online</h2>
-                <p>Real chats & video calls • No weird games</p>
-            </div>
+        <div class="top-bar">
+            <span class="online-badge"><span class="dot"></span> Online Right Now</span>
+            <span class="session-tag">Direct Room</span>
         </div>
 
         <div class="message-card">
             <h1>Hey, glad you made it over here</h1>
             <p>
-                I’m actually online right now looking for real people to chat with or hop on a quick video call. Tap below to head straight to my active room and say hi.
+                I’m online right now looking for real people to chat with or hop on a quick video call. No weird games—just easygoing conversation if we click.
             </p>
         </div>
 
         <div class="perks">
-            <div class="perk-item">💬 Direct Chat</div>
-            <div class="perk-item">📹 Live Video</div>
-            <div class="perk-item">⚡ Quick Reply</div>
-            <div class="perk-item">🔒 Private Access</div>
+            <div class="perk-item">💬 Live Chat</div>
+            <div class="perk-item">📹 Video Call</div>
+            <div class="perk-item">⚡ Fast Reply</div>
+            <div class="perk-item">🔒 Direct Access</div>
+        </div>
+
+        <div class="above-cta">
+            <div class="above-cta-top">
+                <span>NEXT STEP</span>
+                <span>WHILE ONLINE</span>
+            </div>
+            <p>
+                Tap the button below to head straight to my active room—I’m around for a bit, so jump in and say hi before I step away.
+            </p>
         </div>
 
         <a href="https://trk.mitegirl.store/s/GQC8JWJDS7?p=123" class="cta-button">Continue to Chat & Video →</a>
 
-        <p class="sub-note">Opens in a new tab • Takes a few seconds</p>
+        <p class="sub-note">Takes just a moment to open</p>
     </div>
-
-    <script>
-        const now = new Date();
-        document.getElementById('clockText').innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    </script>
 </body>
 </html>

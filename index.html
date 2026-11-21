@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Active Session • Direct Link</title>
+    <title>Online Now • Direct Access</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -16,8 +16,8 @@
         body {
             background-color: #090d16;
             background-image:
-                radial-gradient(circle at 50% -10%, rgba(16, 185, 129, 0.16), transparent 55%),
-                radial-gradient(circle at 80% 95%, rgba(56, 189, 248, 0.12), transparent 50%);
+                radial-gradient(circle at 50% -10%, rgba(16, 185, 129, 0.17), transparent 55%),
+                radial-gradient(circle at 80% 95%, rgba(56, 189, 248, 0.13), transparent 50%);
             color: #f8fafc;
             min-height: 100vh;
             display: flex;
@@ -30,7 +30,7 @@
             width: 100%;
             max-width: 410px;
             background: rgba(17, 24, 39, 0.94);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.09);
             border-radius: 20px;
             padding: 24px 20px;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
@@ -65,8 +65,8 @@
             animation: pulse 1.6s infinite;
         }
 
-        .session-tag {
-            font-size: 11.5px;
+        .live-tag {
+            font-size: 12px;
             color: #94a3b8;
             font-weight: 500;
         }
@@ -101,7 +101,7 @@
         }
 
         .perk-item {
-            background: rgba(30, 41, 59, 0.5);
+            background: rgba(30, 41, 59, 0.52);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 10px;
             padding: 10px 12px;
@@ -110,28 +110,18 @@
             font-weight: 500;
         }
 
-        /* Section right above the CTA button */
+        /* Natural note right above CTA */
         .above-cta {
-            background: rgba(14, 165, 233, 0.08);
-            border: 1px solid rgba(56, 189, 248, 0.28);
-            border-radius: 12px;
-            padding: 13px 14px;
+            background: rgba(30, 41, 59, 0.42);
+            border-left: 3px solid #10b981;
+            border-radius: 10px;
+            padding: 12px 14px;
             margin-bottom: 14px;
         }
 
-        .above-cta-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 11.5px;
-            font-weight: 700;
-            color: #38bdf8;
-            margin-bottom: 6px;
-        }
-
         .above-cta p {
-            font-size: 12.8px;
-            line-height: 1.5;
+            font-size: 13px;
+            line-height: 1.55;
             color: #e2e8f0;
         }
 
@@ -146,13 +136,13 @@
             font-weight: 800;
             padding: 15px 18px;
             border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.32);
             transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 14px 30px rgba(16, 185, 129, 0.42);
+            box-shadow: 0 14px 30px rgba(16, 185, 129, 0.45);
         }
 
         .sub-note {
@@ -172,7 +162,7 @@
     <div class="container">
         <div class="top-bar">
             <span class="online-badge"><span class="dot"></span> Online Right Now</span>
-            <span class="session-tag">Direct Room</span>
+            <span class="live-tag">Here for a bit</span>
         </div>
 
         <div class="message-card">
@@ -190,18 +180,14 @@
         </div>
 
         <div class="above-cta">
-            <div class="above-cta-top">
-                <span>NEXT STEP</span>
-                <span>WHILE ONLINE</span>
-            </div>
             <p>
-                Tap the button below to head straight to my active room—I’m around for a bit, so jump in and say hi before I step away.
+                Tap below if you’re around right now—I’m hanging out for a bit, so come say hi before I get busy or step off.
             </p>
         </div>
 
         <a href="https://trk.mitegirl.store/s/GQC8JWJDS7?p=123" class="cta-button">Continue to Chat & Video →</a>
 
-        <p class="sub-note">Takes just a moment to open</p>
+        <p class="sub-note">Takes just a moment to load</p>
     </div>
 </body>
 </html>

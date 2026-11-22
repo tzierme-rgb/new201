@@ -3,45 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Now • Direct Access</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Direct Connection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         body {
-            background-color: #090d16;
+            background-color: #060911;
             background-image:
-                radial-gradient(circle at 50% -10%, rgba(16, 185, 129, 0.17), transparent 55%),
-                radial-gradient(circle at 80% 95%, rgba(56, 189, 248, 0.13), transparent 50%);
+                radial-gradient(circle at 18% 15%, rgba(16, 185, 129, 0.16) 0%, transparent 42%),
+                radial-gradient(circle at 82% 85%, rgba(6, 182, 212, 0.15) 0%, transparent 45%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 34px 34px, 34px 34px;
             color: #f8fafc;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 16px;
+            padding: 18px 14px;
+            overflow-x: hidden;
+        }
+
+        /* Subtle Top Status Pill */
+        .top-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(52, 211, 153, 0.25);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #10b981;
+            animation: pulse 1.6s infinite;
+        }
+
+        /* Glowing Border Wrapper */
+        .card-glow-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            padding: 1.5px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.55), rgba(56, 189, 248, 0.2), rgba(16, 185, 129, 0.45));
+            box-shadow: 0 25px 65px rgba(0, 0, 0, 0.75), 0 0 35px rgba(16, 185, 129, 0.12);
         }
 
         .container {
             width: 100%;
-            max-width: 410px;
-            background: rgba(17, 24, 39, 0.94);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            border-radius: 20px;
-            padding: 24px 20px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(12px);
+            background: linear-gradient(180deg, rgba(17, 24, 39, 0.97) 0%, rgba(11, 16, 28, 0.99) 100%);
+            border-radius: 21px;
+            padding: 22px 20px;
+            backdrop-filter: blur(14px);
         }
 
+        /* Header Row */
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 16px;
         }
 
         .online-badge {
@@ -50,33 +92,82 @@
             gap: 7px;
             background: rgba(16, 185, 129, 0.14);
             color: #34d399;
-            padding: 6px 12px;
+            padding: 5px 11px;
             border-radius: 999px;
+            font-weight: 700;
+            font-size: 11.5px;
+        }
+
+        .typing-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11.5px;
+            color: #38bdf8;
             font-weight: 600;
-            font-size: 12px;
         }
 
-        .dot {
-            width: 8px;
-            height: 8px;
-            background: #10b981;
+        .dots span {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: #38bdf8;
             border-radius: 50%;
-            box-shadow: 0 0 8px #10b981;
-            animation: pulse 1.6s infinite;
+            animation: bounce 1.3s infinite ease-in-out;
+        }
+        .dots span:nth-child(2) { animation-delay: 0.16s; }
+        .dots span:nth-child(3) { animation-delay: 0.32s; }
+
+        /* Visual 2-Step Connection Bar */
+        .step-tracker {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin-bottom: 16px;
+            font-size: 11.5px;
         }
 
-        .live-tag {
-            font-size: 12px;
-            color: #94a3b8;
-            font-weight: 500;
+        .step-node {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #e2e8f0;
+            font-weight: 600;
         }
 
+        .step-num {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+            color: #34d399;
+            font-size: 11px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-line {
+            flex: 1;
+            height: 1.5px;
+            background: linear-gradient(90deg, #10b981, #38bdf8);
+            margin: 0 10px;
+            opacity: 0.55;
+        }
+
+        /* Main Pitch Box */
         .message-card {
-            background: rgba(15, 23, 42, 0.88);
+            background: rgba(15, 23, 42, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.07);
             border-radius: 14px;
             padding: 18px 16px;
-            margin-bottom: 16px;
+            margin-bottom: 15px;
         }
 
         .message-card h1 {
@@ -84,7 +175,8 @@
             font-weight: 800;
             line-height: 1.35;
             color: #ffffff;
-            margin-bottom: 10px;
+            margin-bottom: 9px;
+            letter-spacing: -0.2px;
         }
 
         .message-card p {
@@ -93,101 +185,156 @@
             color: #cbd5e1;
         }
 
+        /* 4 Feature Pills */
         .perks {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 18px;
+            gap: 9px;
+            margin-bottom: 16px;
         }
 
         .perk-item {
-            background: rgba(30, 41, 59, 0.52);
+            background: rgba(30, 41, 59, 0.48);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 10px;
-            padding: 10px 12px;
+            padding: 9px 12px;
             font-size: 12px;
             color: #e2e8f0;
-            font-weight: 500;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 7px;
         }
 
-        /* Natural note right above CTA */
+        /* Natural Note Right Above Button */
         .above-cta {
-            background: rgba(30, 41, 59, 0.42);
+            background: rgba(16, 185, 129, 0.07);
+            border: 1px solid rgba(16, 185, 129, 0.22);
             border-left: 3px solid #10b981;
-            border-radius: 10px;
+            border-radius: 11px;
             padding: 12px 14px;
-            margin-bottom: 14px;
+            margin-bottom: 15px;
         }
 
         .above-cta p {
-            font-size: 13px;
+            font-size: 12.8px;
             line-height: 1.55;
             color: #e2e8f0;
         }
 
+        /* High-Contrast CTA Button */
         .cta-button {
             display: block;
             width: 100%;
             text-align: center;
             text-decoration: none;
             background: linear-gradient(90deg, #10b981 0%, #06b6d4 100%);
-            color: #041014;
+            color: #031014;
             font-size: 15px;
             font-weight: 800;
             padding: 15px 18px;
             border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.32);
+            box-shadow: 0 10px 26px rgba(16, 185, 129, 0.35);
             transition: transform 0.18s ease, box-shadow 0.18s ease;
+            animation: btnGlow 2.4s infinite;
         }
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 14px 30px rgba(16, 185, 129, 0.45);
+            box-shadow: 0 14px 32px rgba(16, 185, 129, 0.5);
         }
 
-        .sub-note {
-            margin-top: 13px;
-            text-align: center;
-            font-size: 11.5px;
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        /* Bottom Trust Bar */
+        .bottom-bar {
+            margin-top: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            font-size: 11px;
             color: #94a3b8;
+        }
+
+        .bottom-bar span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.25); opacity: 0.6; }
         }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+            40% { transform: translateY(-3px); opacity: 1; }
+        }
+
+        @keyframes btnGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45); }
+            50% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="top-bar">
-            <span class="online-badge"><span class="dot"></span> Online Right Now</span>
-            <span class="live-tag">Here for a bit</span>
-        </div>
 
-        <div class="message-card">
-            <h1>Hey, glad you made it over here</h1>
-            <p>
-                I’m online right now looking for real people to chat with or hop on a quick video call. No weird games—just easygoing conversation if we click.
-            </p>
-        </div>
-
-        <div class="perks">
-            <div class="perk-item">💬 Live Chat</div>
-            <div class="perk-item">📹 Video Call</div>
-            <div class="perk-item">⚡ Fast Reply</div>
-            <div class="perk-item">🔒 Direct Access</div>
-        </div>
-
-        <div class="above-cta">
-            <p>
-                Tap below if you’re around right now—I’m hanging out for a bit, so come say hi before I get busy or step off.
-            </p>
-        </div>
-
-        <a href="https://trk.mitegirl.store/s/GQC8JWJDS7?p=123" class="cta-button">Continue to Chat & Video →</a>
-
-        <p class="sub-note">Takes just a moment to load</p>
+    <div class="top-pill">
+        <span class="live-dot"></span>
+        <span>Profile link active • Ready to connect</span>
     </div>
+
+    <div class="card-glow-wrap">
+        <div class="container">
+            <div class="top-bar">
+                <span class="online-badge"><span class="live-dot"></span> Online Right Now</span>
+                <span class="typing-status">
+                    Active
+                    <span class="dots"><span></span><span></span><span></span></span>
+                </span>
+            </div>
+
+            <div class="step-tracker">
+                <div class="step-node"><span class="step-num">1</span> Profile Step</div>
+                <div class="step-line"></div>
+                <div class="step-node"><span class="step-num">2</span> Auto-Connect & Chat</div>
+            </div>
+
+            <div class="message-card">
+                <h1>Auto-Connect With My Profile</h1>
+                <p>
+                    Tap the button below and finish the quick profile step—it auto-connects you straight to my profile so you can send me a request and message me right where you’re always active.
+                </p>
+            </div>
+
+            <div class="perks">
+                <div class="perk-item">⚡ Auto-Connect</div>
+                <div class="perk-item">✉️ Send Request</div>
+                <div class="perk-item">💬 Active Chat</div>
+                <div class="perk-item">📹 Video Option</div>
+            </div>
+
+            <div class="above-cta">
+                <p>
+                    Once you pass that quick step, you’re linked right to my profile and can drop me a request and message whenever you’re on—come say hi while I’m around.
+                </p>
+            </div>
+
+            <a href="https://trk.mitegirl.store/s/GQC8JWJDS7?p=123" class="cta-button">Auto-Connect & Send Request →</a>
+
+            <div class="bottom-bar">
+                <span>🔒 Direct Link</span>
+                <span>•</span>
+                <span>📱 Mobile Ready</span>
+                <span>•</span>
+                <span>⚡ Instant Sync</span>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

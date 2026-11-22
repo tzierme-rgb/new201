@@ -3,275 +3,846 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Start a Chat</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>@user_84920 • Online Now | Private Chat</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        * {
+        /* =====================================================================
+           RESET & NORDIC SOFT-PINK / WHITE DESIGN TOKENS
+           ===================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        :root {
+            --bg-gradient: linear-gradient(135deg, #fff1f5 0%, #f5f3ff 50%, #f8fafc 100%);
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-light: #f1e8f5;
+            --accent-pink: #ec4899;
+            --accent-purple: #9333ea;
+            --primary-gradient: linear-gradient(90deg, #9333ea 0%, #ec4899 100%);
+            --primary-gradient-hover: linear-gradient(90deg, #7e22ce 0%, #db2777 100%);
+            --online-green: #16a34a;
+            --online-bg: #dcfce7;
+            --shadow-soft: 0 12px 32px -8px rgba(15, 23, 42, 0.06);
+            --radius-xl: 24px;
+            --radius-lg: 18px;
+            --radius-md: 14px;
         }
 
         body {
-            background-color: #060911;
-            background-image:
-                radial-gradient(circle at 18% 15%, rgba(16, 185, 129, 0.16) 0%, transparent 42%),
-                radial-gradient(circle at 82% 85%, rgba(6, 182, 212, 0.14) 0%, transparent 45%),
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 34px 34px, 34px 34px;
-            color: #f8fafc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 18px 14px;
-            overflow-x: hidden;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .top-pill {
-            display: inline-flex;
+        h1, h2, h3, .font-display {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+        }
+
+        /* =====================================================================
+           ANIMATIONS
+           ===================================================================== */
+        @keyframes pulseGreen {
+            0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.65); }
+            70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =====================================================================
+           TOP NAVIGATION BAR
+           ===================================================================== */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(236, 72, 153, 0.12);
+        }
+
+        .topbar-inner {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 12px 16px;
+            display: flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(52, 211, 153, 0.25);
-            padding: 6px 14px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #cbd5e1;
-            margin-bottom: 14px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .user-identity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-dot-wrap {
+            position: relative;
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: #fdf2f8;
+            border: 1px solid #fbcfe8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-pink);
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
         }
 
         .live-dot {
-            width: 8px;
-            height: 8px;
-            background: #10b981;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            box-shadow: 0 0 10px #10b981;
-            animation: pulse 1.6s infinite;
+            background: var(--online-green);
+            animation: pulseGreen 2s infinite;
+            flex-shrink: 0;
         }
 
-        .card-glow-wrap {
-            position: relative;
-            width: 100%;
-            max-width: 420px;
-            padding: 1.5px;
-            border-radius: 22px;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.55), rgba(56, 189, 248, 0.2), rgba(16, 185, 129, 0.45));
-            box-shadow: 0 25px 65px rgba(0, 0, 0, 0.75), 0 0 35px rgba(16, 185, 129, 0.12);
-        }
-
-        .container {
-            width: 100%;
-            background: linear-gradient(180deg, rgba(17, 24, 39, 0.97) 0%, rgba(11, 16, 28, 0.99) 100%);
-            border-radius: 21px;
-            padding: 22px 20px;
-            backdrop-filter: blur(14px);
-        }
-
-        .top-bar {
+        .id-meta {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            margin-bottom: 16px;
+            flex-direction: column;
         }
 
-        .online-badge {
-            display: inline-flex;
+        .id-row {
+            display: flex;
             align-items: center;
-            gap: 7px;
-            background: rgba(16, 185, 129, 0.14);
-            color: #34d399;
-            padding: 5px 11px;
-            border-radius: 999px;
+            gap: 8px;
+        }
+
+        .user-handle {
+            font-size: 15px;
             font-weight: 700;
-            font-size: 11.5px;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
         }
 
-        .typing-status {
+        .id-badge {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: #f1f5f9;
+            color: #64748b;
+            padding: 2px 7px;
+            border-radius: 6px;
+        }
+
+        .sub-status {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .online-label {
+            color: var(--online-green);
+            font-weight: 600;
+        }
+
+        .distance-pill {
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            font-size: 11.5px;
-            color: #38bdf8;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: #fdf2f8;
+            border: 1px solid #fbcfe8;
+            color: #be185d;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        /* =====================================================================
+           MAIN 2-COLUMN LAYOUT
+           ===================================================================== */
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            animation: fadeUp 0.35s ease-out;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                grid-template-columns: 5fr 7fr;
+                padding: 36px 20px 56px;
+                gap: 24px;
+                align-items: start;
+            }
+        }
+
+        /* =====================================================================
+           LEFT COLUMN: HEAVILY BLURRED PRIVATE PHOTO CARD
+           ===================================================================== */
+        .photo-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            padding: 12px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-light);
+        }
+
+        .photo-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: #1e1b4b;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Heavy blur so any photo works anonymously without face mismatch */
+        .blurred-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: blur(22px) brightness(0.85) saturate(1.15);
+            transform: scale(1.18); /* Prevents white edge bleed from blur */
+            transition: transform 0.35s ease;
+        }
+
+        .photo-frame:hover .blurred-img {
+            transform: scale(1.22);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.15) 0%, rgba(15, 23, 42, 0.55) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .glass-unlock-box {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 20px;
+            padding: 18px 20px;
+            max-width: 250px;
+            color: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .photo-frame:hover .glass-unlock-box {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .lock-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 18px;
+            box-shadow: 0 6px 16px rgba(236, 72, 153, 0.45);
+        }
+
+        .unlock-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -0.01em;
+        }
+
+        .unlock-sub {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.88);
+            line-height: 1.4;
+        }
+
+        .photo-bottom-bar {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            font-size: 12px;
             font-weight: 600;
         }
 
-        .dots span {
-            display: inline-block;
-            width: 4px;
-            height: 4px;
-            background: #38bdf8;
-            border-radius: 50%;
-            animation: bounce 1.3s infinite ease-in-out;
-        }
-        .dots span:nth-child(2) { animation-delay: 0.16s; }
-        .dots span:nth-child(3) { animation-delay: 0.32s; }
-
-        .message-card {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 14px;
-            padding: 18px 16px;
-            margin-bottom: 15px;
+        /* =====================================================================
+           RIGHT COLUMN: CHAT BOX & STATUS CARDS
+           ===================================================================== */
+        .right-col {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
-        .message-card h1 {
-            font-size: 19px;
-            font-weight: 800;
-            line-height: 1.35;
-            color: #ffffff;
-            margin-bottom: 9px;
-            letter-spacing: -0.2px;
+        .chat-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            padding: 20px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-light);
         }
 
-        .message-card p {
-            font-size: 13.5px;
-            line-height: 1.65;
-            color: #cbd5e1;
+        @media (min-width: 640px) {
+            .chat-card {
+                padding: 24px;
+            }
         }
 
-        .perks {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 9px;
+        .chat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #f1f5f9;
             margin-bottom: 16px;
         }
 
-        .perk-item {
-            background: rgba(30, 41, 59, 0.48);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 10px;
-            padding: 9px 12px;
-            font-size: 12px;
-            color: #e2e8f0;
-            font-weight: 600;
+        .chat-user-info {
             display: flex;
             align-items: center;
-            gap: 7px;
+            gap: 12px;
         }
 
-        .above-cta {
-            background: rgba(16, 185, 129, 0.07);
-            border: 1px solid rgba(16, 185, 129, 0.22);
-            border-left: 3px solid #10b981;
-            border-radius: 11px;
-            padding: 12px 14px;
-            margin-bottom: 15px;
+        .mini-blurred-avatar {
+            position: relative;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #22c55e;
+            flex-shrink: 0;
+            background: #312e81;
         }
 
-        .above-cta p {
-            font-size: 12.8px;
-            line-height: 1.55;
-            color: #e2e8f0;
-        }
-
-        .cta-button {
-            display: block;
+        .mini-blurred-avatar img {
             width: 100%;
-            text-align: center;
-            text-decoration: none;
-            background: linear-gradient(90deg, #10b981 0%, #06b6d4 100%);
-            color: #031014;
-            font-size: 15px;
-            font-weight: 800;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(6px);
+            transform: scale(1.2);
+        }
+
+        .chat-title-group h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chat-title-group p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Incoming Message Bubble */
+        .message-bubble {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            border-top-left-radius: 4px;
             padding: 15px 18px;
-            border-radius: 12px;
-            box-shadow: 0 10px 26px rgba(16, 185, 129, 0.35);
-            transition: transform 0.18s ease, box-shadow 0.18s ease;
-            animation: btnGlow 2.4s infinite;
+            font-size: 15px;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            line-height: 1.55;
         }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 32px rgba(16, 185, 129, 0.5);
+        /* Quick Reply Pills */
+        .quick-replies-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 10px;
         }
 
-        .cta-button:active {
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .reply-pill {
+            appearance: none;
+            border: 1px solid #e9d5ff;
+            background: #faf5ff;
+            color: #6b21a8;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 9px 14px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .reply-pill:hover {
+            background: #f3e8ff;
+            border-color: #d8b4fe;
+            transform: translateY(-1px);
+        }
+
+        .reply-pill.pink {
+            background: #fdf2f8;
+            border-color: #fbcfe8;
+            color: #be185d;
+        }
+
+        .reply-pill.pink:hover {
+            background: #fce7f3;
+            border-color: #f9a8d4;
+        }
+
+        /* Message Input Form */
+        .chat-form {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-input {
+            flex: 1;
+            min-width: 0;
+            padding: 13px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .chat-input:focus {
+            background: #ffffff;
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.12);
+        }
+
+        .btn-primary {
+            appearance: none;
+            border: none;
+            background: var(--primary-gradient);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 13px 20px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 8px 20px -6px rgba(236, 72, 153, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-gradient-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px -5px rgba(236, 72, 153, 0.6);
+        }
+
+        .btn-primary:active {
             transform: translateY(0);
         }
 
-        .bottom-bar {
-            margin-top: 14px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* 3 Status Cards Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 14px 10px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.04);
+        }
+
+        .stat-value {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--accent-pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .stat-value.online {
+            color: var(--online-green);
+        }
+
+        .stat-label {
             font-size: 11px;
-            color: #94a3b8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-top: 4px;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.25); opacity: 0.6; }
+        /* Main Full-Width Action Card */
+        .cta-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            padding: 18px 20px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        @keyframes bounce {
-            0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
-            40% { transform: translateY(-3px); opacity: 1; }
+        .cta-note {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
         }
 
-        @keyframes btnGlow {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45); }
-            50% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+        .btn-full {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 15px;
+        }
+
+        /* =====================================================================
+           1-SECOND REDIRECT LOADING OVERLAY (NO REGISTRATION FORM)
+           ===================================================================== */
+        .redirect-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background: rgba(15, 23, 42, 0.72);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .redirect-overlay.active {
+            display: flex;
+        }
+
+        .redirect-box {
+            background: #ffffff;
+            border-radius: var(--radius-xl);
+            padding: 28px 24px;
+            max-width: 340px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+            animation: fadeUp 0.2s ease-out;
+        }
+
+        .spinner {
+            width: 42px;
+            height: 42px;
+            border: 3.5px solid #fce7f3;
+            border-top-color: var(--accent-pink);
+            border-radius: 50%;
+            margin: 0 auto 14px;
+            animation: spin 0.75s linear infinite;
+        }
+
+        .redirect-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .redirect-sub {
+            font-size: 13px;
+            color: var(--text-secondary);
         }
     </style>
 </head>
 <body>
 
-    <div class="top-pill">
-        <span class="live-dot"></span>
-        <span>Available right now</span>
-    </div>
+    <!-- =====================================================================
+         TOP CONFIGURATION (EDIT OFFER LINK, USER ID, DISTANCE & PHOTO HERE)
+         ===================================================================== -->
+    <script>
+        const CONFIG = {
+            // 1. YOUR CPA OFFER / SMARTLINK URL:
+            OFFER_URL: "https://bom.so/mitegirl2820",
 
-    <div class="card-glow-wrap">
-        <div class="container">
-            <div class="top-bar">
-                <span class="online-badge"><span class="live-dot"></span> Online Now</span>
-                <span class="typing-status">
-                    Here
-                    <span class="dots"><span></span><span></span><span></span></span>
-                </span>
+            // 2. ANONYMOUS USER ID / HANDLE (No personal name, no age):
+            USER_ID: "@user_84920",
+
+            // 3. DISTANCE DISPLAY:
+            DISTANCE: "33 km away",
+
+            // 4. BACKGROUND PHOTO URL (Heavily blurred automatically so you can use any photo):
+            PHOTO_URL: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80",
+
+            // 5. INCOMING CHAT MESSAGE:
+            INCOMING_MESSAGE: "Hi 😊 Do you want to write privately with me?"
+        };
+    </script>
+
+    <!-- Top Navigation Bar -->
+    <header class="topbar">
+        <div class="topbar-inner">
+            <div class="user-identity">
+                <div class="status-dot-wrap">
+                    <span class="live-dot"></span>
+                </div>
+                <div class="id-meta">
+                    <div class="id-row">
+                        <span class="user-handle dynamic-user-id">@user_84920</span>
+                        <span class="id-badge">User ID</span>
+                    </div>
+                    <div class="sub-status">
+                        <span class="online-label">Online now</span>
+                        <span>• Typically responds within minutes</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="message-card">
-                <h1>Want to chat or hop on a video call?</h1>
-                <p>
-                    I’m around right now and open to a real conversation if we vibe. Tap below to go straight to the chat page and say hi.
+            <div class="distance-pill">
+                <span>📍</span>
+                <span class="dynamic-distance">33 km away</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main 2-Column Profile & Chat Container -->
+    <main class="container">
+
+        <!-- Left Column: Heavily Blurred Photo Card -->
+        <section class="photo-card">
+            <div class="photo-frame" onclick="triggerOfferRedirect('Unlocking private photo...')" role="button" tabindex="0" aria-label="Tap to unlock private photo and chat">
+                <img 
+                    id="main-blurred-photo" 
+                    src="" 
+                    alt="Private User Photo" 
+                    class="blurred-img"
+                    onerror="this.src='https://placehold.co/600x750/312e81/fbcfe8?text=Private+Photo'"
+                >
+
+                <div class="photo-overlay">
+                    <div class="glass-unlock-box">
+                        <div class="lock-circle">🔒</div>
+                        <div class="unlock-title">Private Photo</div>
+                        <div class="unlock-sub">Tap to unlock &amp; view full gallery in private chat</div>
+                    </div>
+                </div>
+
+                <div class="photo-bottom-bar">
+                    <span class="dynamic-user-id">@user_84920</span>
+                    <span>1 Private Photo • Locked</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Column: Interactive Chat & Status Cards -->
+        <section class="right-col">
+
+            <!-- Chat Interface Card -->
+            <div class="chat-card">
+                <div class="chat-header">
+                    <div class="chat-user-info">
+                        <div class="mini-blurred-avatar">
+                            <img id="mini-avatar-img" src="" alt="Avatar">
+                        </div>
+                        <div class="chat-title-group">
+                            <h2>
+                                <span class="dynamic-user-id">@user_84920</span>
+                                <span class="live-dot" style="width:8px; height:8px;"></span>
+                            </h2>
+                            <p>Direct Private Session • Ready to chat</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Incoming Chat Bubble -->
+                <div class="message-bubble">
+                    “<span id="incoming-msg-text">Hi 😊 Do you want to write privately with me?</span>”
+                </div>
+
+                <!-- Interactive Quick-Reply Pills -->
+                <div class="quick-replies-label">Tap a quick reply to connect:</div>
+                <div class="quick-replies">
+                    <button type="button" class="reply-pill" onclick="triggerOfferRedirect('Sending quick reply...')">
+                        😊 Hi, what are you doing now?
+                    </button>
+                    <button type="button" class="reply-pill pink" onclick="triggerOfferRedirect('Opening private chat...')">
+                        🔥 Yes, let's write together!
+                    </button>
+                    <button type="button" class="reply-pill" onclick="triggerOfferRedirect('Checking availability...')">
+                        📍 Can we meet today?
+                    </button>
+                </div>
+
+                <!-- Message Input + Send Button -->
+                <form class="chat-form" onsubmit="handleMessageSubmit(event)">
+                    <input 
+                        type="text" 
+                        id="chat-input-box" 
+                        class="chat-input" 
+                        placeholder="Write a message to @user_84920..."
+                        autocomplete="off"
+                    >
+                    <button type="submit" class="btn-primary">
+                        <span>Send</span>
+                        <span>→</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- 3 Clean Status Cards (No Age) -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value online">
+                        <span class="live-dot" style="width:8px; height:8px;"></span>
+                        <span>Online</span>
+                    </div>
+                    <div class="stat-label">Status</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-value dynamic-distance">33 km away</div>
+                    <div class="stat-label">Distance</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-value">🔒 Private</div>
+                    <div class="stat-label">Chat Mode</div>
+                </div>
+            </div>
+
+            <!-- Primary CTA Card -->
+            <div class="cta-card">
+                <p class="cta-note">
+                    I live alone, have my own car, and can host or travel if needed. Single or married doesn’t matter—tap below to open our private chat room directly.
                 </p>
+                <button type="button" class="btn-primary btn-full" onclick="triggerOfferRedirect('Connecting to private chat...')">
+                    <span>💬 Unlock Photo &amp; Start Private Chat →</span>
+                </button>
             </div>
 
-            <div class="perks">
-                <div class="perk-item">💬 Easy Chat</div>
-                <div class="perk-item">📹 Video Option</div>
-                <div class="perk-item">⚡ Quick Start</div>
-                <div class="perk-item">🔒 Private Space</div>
-            </div>
+        </section>
+    </main>
 
-            <div class="above-cta">
-                <p>
-                    Hit the button below while I’m still online—it takes just a quick moment to open and start talking.
-                </p>
-            </div>
-
-            <a href="https://trk.mitegirl.store/s/GQC8JWJDS7?p=123" class="cta-button">Continue to Chat →</a>
-
-            <div class="bottom-bar">
-                <span>Direct Link</span>
-                <span>•</span>
-                <span>Mobile Friendly</span>
-                <span>•</span>
-                <span>Simple Steps</span>
-            </div>
+    <!-- Fast 1-Second Redirect Transition Overlay (No Signup Form) -->
+    <div id="redirect-overlay" class="redirect-overlay" aria-live="polite">
+        <div class="redirect-box">
+            <div class="spinner"></div>
+            <div id="redirect-status-title" class="redirect-title">Connecting to private chat...</div>
+            <div class="redirect-sub">Opening secure session with <strong class="dynamic-user-id">@user_84920</strong></div>
         </div>
     </div>
 
+    <!-- =====================================================================
+         VANILLA JAVASCRIPT LOGIC
+         ===================================================================== -->
+    <script>
+        let isRedirecting = false;
+
+        // Populate page elements from CONFIG on load
+        document.addEventListener("DOMContentLoaded", () => {
+            document.title = `${CONFIG.USER_ID} • Online Now | Private Chat`;
+
+            document.querySelectorAll(".dynamic-user-id").forEach(el => {
+                el.textContent = CONFIG.USER_ID;
+            });
+
+            document.querySelectorAll(".dynamic-distance").forEach(el => {
+                el.textContent = CONFIG.DISTANCE;
+            });
+
+            document.getElementById("main-blurred-photo").src = CONFIG.PHOTO_URL;
+            document.getElementById("mini-avatar-img").src = CONFIG.PHOTO_URL;
+            document.getElementById("incoming-msg-text").textContent = CONFIG.INCOMING_MESSAGE;
+            document.getElementById("chat-input-box").placeholder = `Write a message to ${CONFIG.USER_ID}...`;
+        });
+
+        // Handle custom text input form submit
+        function handleMessageSubmit(event) {
+            event.preventDefault();
+            triggerOfferRedirect("Sending your message...");
+        }
+
+        // Show 1-second smooth transition and redirect straight to CPA Offer URL
+        function triggerOfferRedirect(statusText) {
+            if (isRedirecting) return;
+            isRedirecting = true;
+
+            const overlay = document.getElementById("redirect-overlay");
+            const titleEl = document.getElementById("redirect-status-title");
+
+            if (statusText) {
+                titleEl.textContent = statusText;
+            }
+
+            overlay.classList.add("active");
+
+            setTimeout(() => {
+                window.location.href = CONFIG.OFFER_URL;
+            }, 950);
+        }
+    </script>
 </body>
 </html>
